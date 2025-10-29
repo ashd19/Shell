@@ -1,0 +1,3 @@
+[submodule "codecrafters-shell-rust"]
+	path = codecrafters-shell-rust
+	url = git@github.com:ashd19/Shell.git
