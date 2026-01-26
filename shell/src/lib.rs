@@ -2,7 +2,7 @@ use std::env::{self, current_dir};
 use std::path::Path;
 use std::os::unix::fs::PermissionsExt;
 
-pub const BUILTINS: [&str; 2] = ["echo","type"];
+pub const BUILTINS: [&str; 4] = ["echo","type","pwd","history"];
 
 pub fn is_builtin(cmd: &str) -> bool {
     BUILTINS.contains(&cmd)
@@ -32,6 +32,9 @@ pub fn pwd() {
         Err(e) => eprintln!("pwd: error: {}", e),
     }
 }
+
+
+
 
 #[cfg(test)]
 mod tests {
