@@ -12,8 +12,9 @@ fn main() {
         match input_cmd {
             "exit 0" | "exit" => process::exit(0),
             "exit 1" => process::exit(1),
-            
-            
+            cmd if cmd.starts_with("echo") =>{
+                println!("{}",&cmd[5..].trim_start());
+            },         
             cmd if is_builtin(cmd) => println!("{cmd} is a builtin command"),
 
 
