@@ -1,8 +1,8 @@
-use std::env;
+use std::env::{self, current_dir};
 use std::path::Path;
 use std::os::unix::fs::PermissionsExt;
 
-pub const BUILTINS: [&str; 3] = ["echo", "exit", "type"];
+pub const BUILTINS: [&str; 2] = ["echo","type"];
 
 pub fn is_builtin(cmd: &str) -> bool {
     BUILTINS.contains(&cmd)
@@ -24,6 +24,13 @@ pub fn find_in_path(cmd: &str) -> Option<String> {
         }
     }
     None
+}
+
+pub fn pwd() {
+    match env::current_dir() {
+        Ok(path) => println!("{}", path.display()),
+        Err(e) => eprintln!("pwd: error: {}", e),
+    }
 }
 
 #[cfg(test)]

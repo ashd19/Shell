@@ -1,5 +1,5 @@
 use std::{io::{self, Write}, process};
-use shell::{is_builtin, find_in_path};
+use shell::{is_builtin, find_in_path,pwd};
 
 fn main() {
     loop {
@@ -24,6 +24,9 @@ fn main() {
                 } else {
                     println!("{command}: not found");
                 }
+            },
+            "pwd" => {
+                    pwd();
             },
 
             _ => println!("{input_cmd}: command not found"),
