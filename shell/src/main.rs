@@ -1,9 +1,9 @@
 use std::{io::{self, Write}, process};
-use shell::is_builtin;
+use shell::{is_builtin, find_in_path};
 
 fn main() {
     loop {
-        print!("$");
+        print!("$ ");
         io::stdout().flush().expect("Error from stdout");
         let mut input = String::new();
         io::stdin().read_line(&mut input).expect("Error from readline");
@@ -14,10 +14,17 @@ fn main() {
             "exit 1" => process::exit(1),
             cmd if cmd.starts_with("echo") =>{
                 println!("{}",&cmd[5..].trim_start());
-            },         
-            cmd if is_builtin(cmd) => println!("{cmd} is a builtin command"),
-
-
+            },
+            cmd if cmd.starts_with("type ") => {
+                let command = &cmd[5..].trim();
+                if is_builtin(command) {
+                    println!("{command} is a shell builtin");
+                } else if let Some(path) = find_in_path(command) {
+                    println!("{command} is {path}");
+                } else {
+                    println!("{command}: not found");
+                }
+            },
 
             _ => println!("{input_cmd}: command not found"),
         }
