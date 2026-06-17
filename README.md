@@ -48,6 +48,3 @@ $ exit 0
 - `src/main.rs`: The main entry point containing the REPL and command processing logic.
 - `your_program.sh`: A wrapper script used by CodeCrafters for execution.
 
-## License
-
-This project is for educational purposes as part of the CodeCrafters challenge.
