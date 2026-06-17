@@ -21,12 +21,10 @@ fn main() {
                 
                  cmd if cmd.starts_with("echo") {
                     println!();
-                } else {
-                    println!("{}: command not found", trimmed_input);
                 }
+                _ => println!("{}: command not found", trimmed_input),
                 }
                
-                _ => println!("{}: command not found", trimmed_input),
             }     
   }
-}
+
