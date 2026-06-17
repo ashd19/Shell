@@ -19,7 +19,7 @@ fn main() {
                     process::exit(0);
                 },
                 
-                 cmd if cmd.starts_with("echo") {
+                 cmd if cmd.starts_with("echo") => {
                     println!();
                 }
                 _ => println!("{}: command not found", trimmed_input),
