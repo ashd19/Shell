@@ -12,6 +12,9 @@ fn main() {
             let trimmed_input = input.trim();
             
             match trimmed_input {
+                "exit" => {
+                    process::exit(0);
+                },
                 "exit 1" => {
                     process::exit(1);
                 },
