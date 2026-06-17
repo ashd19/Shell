@@ -20,7 +20,7 @@ fn main() {
                 },
                 
                  cmd if cmd.starts_with("echo") => {
-                    println!();
+                    println!("{}", &cmd[5..]);
                 }
                 _ => println!("{}: command not found", trimmed_input),
                 }
