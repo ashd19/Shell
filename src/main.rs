@@ -19,7 +19,7 @@ fn main() {
                     process::exit(0);
                 },
                 
-                for cmd in trimmed_input.split_whitespace() {
+                 cmd in trimmed_input.split_whitespace() {
                     if cmd == "echo" {
                         println!();
                     } else {
