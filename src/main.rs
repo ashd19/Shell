@@ -8,11 +8,11 @@ fn main() {
             print!("$ ");
             io::stdout().flush().unwrap();
                 let mut input = String::new();
-                io::stdin().read_line(&mut input).unwrap();
+                
+                if input.trim() == "exit" {
+                    std::process::exit(0);
+                }
+else {                io::stdin().read_line(&mut input).unwrap();
                 println!("{}: command not found", input.trim());
-
-            if input.trim() == "exit" {
-                std::process::exit(0);
-            }
-        }
+}        }
 }
