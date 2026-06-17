@@ -19,12 +19,11 @@ fn main() {
                     process::exit(0);
                 },
                 
-                 cmd in trimmed_input.split_whitespace() {
-                    if cmd == "echo" {
-                        println!();
-                    } else {
-                        println!("{}: command not found", trimmed_input);
-                    }
+                 cmd if cmd.starts_with("echo") {
+                    println!();
+                } else {
+                    println!("{}: command not found", trimmed_input);
+                }
                 }
                
                 _ => println!("{}: command not found", trimmed_input),
