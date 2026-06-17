@@ -9,12 +9,16 @@ fn main() {
             io::stdout().flush().unwrap();
             let mut input = String::new();
             io::stdin().read_line(&mut input).unwrap();
+            let trimmed_input = input.trim();
             
-            if input.trim() == "exit" {
-                std::process::exit(0);
-            }
-            else {        
-                println!("{}: command not found", input.trim());
-}      
+            match trimmed_input {
+                "exit 1" => {
+                    process::exit(1);
+                },
+                "exit 0" => {
+                    process::exit(0);
+                },
+                _ => println!("{}: command not found", trimmed_input),
+            }     
   }
 }
