@@ -18,6 +18,15 @@ fn main() {
                 "exit 0" => {
                     process::exit(0);
                 },
+                
+                for cmd in trimmed_input.split_whitespace() {
+                    if cmd == "echo" {
+                        println!();
+                    } else {
+                        println!("{}: command not found", trimmed_input);
+                    }
+                }
+               
                 _ => println!("{}: command not found", trimmed_input),
             }     
   }
