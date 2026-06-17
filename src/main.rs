@@ -12,13 +12,22 @@ fn main() {
             let trimmed_input = input.trim();
             
             match trimmed_input {
+                "exit" => {
+                    process::exit(0);
+                },
                 "exit 1" => {
                     process::exit(1);
                 },
                 "exit 0" => {
                     process::exit(0);
                 },
+                
+                 cmd if cmd.starts_with("echo") => {
+                    println!("{}", &cmd[5..]);
+                }
                 _ => println!("{}: command not found", trimmed_input),
+                }
+               
             }     
   }
-}
+
