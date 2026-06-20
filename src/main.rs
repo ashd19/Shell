@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::io::{self, Write};
 use std::os::unix::fs::PermissionsExt;
+use std::os::unix::process::CommandExt;
 use std::path::{Path, PathBuf};
 use std::process;
 
@@ -59,6 +60,7 @@ fn main() {
                 match find_in_path(command) {
                     Some(p) => {
                         let output = process::Command::new(p)
+                            .arg0(command)
                             .args(&args)
                             .output();
                         match output {
