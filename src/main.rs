@@ -3,7 +3,6 @@ use std::io::{self, Write};
 use std::process;
 
 fn main() {
-    // TODO: Uncomment the code below to pass the first stage
     loop {
             print!("$ ");
             io::stdout().flush().unwrap();
@@ -21,13 +20,19 @@ fn main() {
                 "exit 0" => {
                     process::exit(0);
                 },
-                
-                 cmd if cmd.starts_with("echo") => {
+                cmd if cmd.starts_with("echo") => {
                     println!("{}", &cmd[5..]);
                 }
-                _ => println!("{}: command not found", trimmed_input),
+                cmd if cmd.starts_with("type ") => {
+                    let cmd_name = cmd[5..].trim();
+                    match cmd_name {
+                        "echo" | "exit" | "type" => println!("{} is a shell builtin", cmd_name),
+                        _ => println!("{}: not found", cmd_name),
+                    }
+                }
+                _ => println!("{}: not found", trimmed_input),
                 }
                
             }     
   }
-
+}
