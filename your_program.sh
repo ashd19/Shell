@@ -14,7 +14,7 @@ set -e # Exit early if any commands fail
 # - Edit .codecrafters/compile.sh to change how your program compiles remotely
 (
   cd "$(dirname "$0")" # Ensure compile steps are run within the repository directory
-  cargo build --release --target-dir=/tmp/codecrafters-build-shell-rust --manifest-path Cargo.toml
+  cargo build --release --target-dir=/tmp/codecrafters-build-shell-rust --manifest-path Cargo.toml > /dev/null 2>&1
 )
 
 # Copied from .codecrafters/run.sh
