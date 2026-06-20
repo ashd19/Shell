@@ -43,10 +43,13 @@ fn main() {
                 let rest: Vec<&str> = parts.collect();
                 println!("{}", rest.join(" "));
             }
+            "pwd" => {
+                println!("{}", env::current_dir().unwrap().display());
+            }
             "type" => {
                 let cmd_name = parts.next().unwrap_or("");
                 match cmd_name {
-                    "echo" | "exit" | "type" => println!("{} is a shell builtin", cmd_name),
+                    "echo" | "exit" | "type" | "pwd" => println!("{} is a shell builtin", cmd_name),
                     _ => {
                         match find_in_path(cmd_name) {
                             Some(p) => println!("{} is {}", cmd_name, p.display()),
