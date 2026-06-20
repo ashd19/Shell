@@ -6,6 +6,38 @@ use std::os::unix::process::CommandExt;
 use std::path::{Path, PathBuf};
 use std::process;
 
+fn parse_args(input: &str) -> Vec<String> {
+    let mut args = Vec::new();
+    let mut current = String::new();
+    let mut in_single_quote = false;
+    let mut chars = input.chars().peekable();
+
+    while let Some(ch) = chars.next() {
+        if in_single_quote {
+            if ch == '\'' {
+                in_single_quote = false;
+            } else {
+                current.push(ch);
+            }
+        } else if ch == '\'' {
+            in_single_quote = true;
+        } else if ch.is_whitespace() {
+            if !current.is_empty() {
+                args.push(current.clone());
+                current.clear();
+            }
+        } else {
+            current.push(ch);
+        }
+    }
+
+    if !current.is_empty() {
+        args.push(current);
+    }
+
+    args
+}
+
 fn find_in_path(name: &str) -> Option<PathBuf> {
     let path = env::var("PATH").unwrap_or_default();
     path.split(':').find_map(|dir| {
@@ -31,20 +63,19 @@ fn main() {
             continue;
         }
 
-        let mut parts = trimmed_input.split_whitespace();
-        let command = parts.next().unwrap();
+        let parts = parse_args(trimmed_input);
+        let command = &parts[0];
 
-        match command {
+        match command.as_str() {
             "exit" => {
-                let exit_code = parts.next().and_then(|c| c.parse().ok()).unwrap_or(0);
+                let exit_code = parts.get(1).and_then(|c| c.parse().ok()).unwrap_or(0);
                 process::exit(exit_code);
             }
             "echo" => {
-                let rest: Vec<&str> = parts.collect();
-                println!("{}", rest.join(" "));
+                println!("{}", parts[1..].join(" "));
             }
             "cd" => {
-                let dir = parts.next().unwrap_or("");
+                let dir = parts.get(1).map(|s| s.as_str()).unwrap_or("");
                 let dir = if dir == "~" {
                     env::var("HOME").unwrap_or_else(|_| dir.to_string())
                 } else {
@@ -62,7 +93,7 @@ fn main() {
                 println!("{}", env::current_dir().unwrap().display());
             }
             "type" => {
-                let cmd_name = parts.next().unwrap_or("");
+                let cmd_name = parts.get(1).map(|s| s.as_str()).unwrap_or("");
                 match cmd_name {
                     "echo" | "exit" | "type" | "pwd" | "cd" => println!("{} is a shell builtin", cmd_name),
                     _ => {
@@ -74,7 +105,7 @@ fn main() {
                 }
             }
             _ => {
-                let args: Vec<&str> = parts.collect();
+                let args: Vec<String> = parts[1..].to_vec();
                 match find_in_path(command) {
                     Some(p) => {
                         let output = process::Command::new(p)
