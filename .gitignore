@@ -10,5 +10,5 @@ target/
 
 # CodeCrafters specific files
 .codecrafters/
-codecrafters.yml
+
 your_program.sh
