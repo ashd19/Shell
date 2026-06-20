@@ -9,6 +9,4 @@ target/
 *.pdb
 
 # CodeCrafters specific files
-.codecrafters/
 
-your_program.sh
