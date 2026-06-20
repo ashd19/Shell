@@ -43,13 +43,23 @@ fn main() {
                 let rest: Vec<&str> = parts.collect();
                 println!("{}", rest.join(" "));
             }
+            "cd" => {
+                let dir = parts.next().unwrap_or("");
+                if let Err(e) = env::set_current_dir(dir) {
+                    let msg = match e.kind() {
+                        std::io::ErrorKind::NotFound => "No such file or directory",
+                        _ => "No such file or directory",
+                    };
+                    println!("cd: {}: {}", dir, msg);
+                }
+            }
             "pwd" => {
                 println!("{}", env::current_dir().unwrap().display());
             }
             "type" => {
                 let cmd_name = parts.next().unwrap_or("");
                 match cmd_name {
-                    "echo" | "exit" | "type" | "pwd" => println!("{} is a shell builtin", cmd_name),
+                    "echo" | "exit" | "type" | "pwd" | "cd" => println!("{} is a shell builtin", cmd_name),
                     _ => {
                         match find_in_path(cmd_name) {
                             Some(p) => println!("{} is {}", cmd_name, p.display()),
