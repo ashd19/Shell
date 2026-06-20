@@ -45,7 +45,12 @@ fn main() {
             }
             "cd" => {
                 let dir = parts.next().unwrap_or("");
-                if let Err(e) = env::set_current_dir(dir) {
+                let dir = if dir == "~" {
+                    env::var("HOME").unwrap_or_else(|_| dir.to_string())
+                } else {
+                    dir.to_string()
+                };
+                if let Err(e) = env::set_current_dir(&dir) {
                     let msg = match e.kind() {
                         std::io::ErrorKind::NotFound => "No such file or directory",
                         _ => "No such file or directory",
