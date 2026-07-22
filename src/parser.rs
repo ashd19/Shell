@@ -13,7 +13,16 @@ pub fn parse_args(input: &str) -> Vec<String> {
                 current.push(ch);
             }
         } else if in_double_quote {
-            if ch == '"' {
+            if ch == '\\' {
+                if let Some(next) = chars.next() {
+                    if matches!(next, '"' | '\\' | '$' | '`') {
+                        current.push(next);
+                    } else {
+                        current.push(ch);
+                        current.push(next);
+                    }
+                }
+            } else if ch == '"' {
                 in_double_quote = false;
             } else {
                 current.push(ch);
