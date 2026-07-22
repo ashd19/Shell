@@ -18,6 +18,10 @@ pub fn parse_args(input: &str) -> Vec<String> {
             } else {
                 current.push(ch);
             }
+        } else if ch == '\\' {
+            if let Some(next) = chars.next() {
+                current.push(next);
+            }
         } else if ch == '\'' {
             in_single_quote = true;
         } else if ch == '"' {
