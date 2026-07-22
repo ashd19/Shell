@@ -9,4 +9,5 @@ target/
 *.pdb
 
 # CodeCrafters specific files
+/main
 
