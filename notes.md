@@ -1,1 +1,0 @@
-1. In Rust, when a project has both src/lib.rs and src/main.rs, the library crate is automatically accessible to the binary crate under the package name converted to a Rust identifier — codecrafters-shell → codecrafters_shell. So codecrafters_shell::shell::run() in main.rs calls into the library crate's shell module
